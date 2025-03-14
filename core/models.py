@@ -4,6 +4,7 @@ class Post(models.Model):
     title = models.CharField(max_length=155, verbose_name='Заголовок')
     text = models.TextField(max_length=1000, verbose_name='Текст')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    image = models.ImageField(upload_to='images/', verbose_name='Картинка', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Пост'
