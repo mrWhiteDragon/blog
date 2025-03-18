@@ -8,10 +8,12 @@
     <h4 class="mb-3">Записи</h4>
 
     {% for post in posts %}
-    <div class="card">
+    <div class="card mb-3">
 
       <div class="card-header">
-        Категория
+        {% if post.category %}
+          {{ post.category.title}}
+        {% endif %}
       </div>
 
       <div class="card-body">
@@ -34,11 +36,11 @@
 
     <h4 class="mb-3">Категории</h4>
     <ul class="list-group">
-      <li class="list-group-item">Категория 1</li>
-      <li class="list-group-item">Категория 2</li>
-      <li class="list-group-item">Категория 3</li>
-      <li class="list-group-item">Категория 4</li>
-      <li class="list-group-item">Категория 5</li>
+      {% if categories %}
+        {% for category in categories %}
+          <li class="list-group-item">{{ category.title }}</li>
+        {% endfor %}
+      {% endif %}
     </ul>
 
   </div>

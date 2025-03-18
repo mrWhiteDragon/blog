@@ -1,6 +1,7 @@
 from django import forms
-from .models import Post
+from .models import Category
 
 class PostAddForm(forms.Form):
-    model = Post
-    fields = '__all__'
+    title = forms.CharField(max_length=155)
+    text = forms.CharField(widget=forms.Textarea)
+    category = forms.ModelChoiceField(queryset=Category.objects.all())

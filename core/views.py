@@ -1,20 +1,31 @@
 from django.shortcuts import render, redirect
-from .models import Post
+from .models import Post, Category
 
 def main(request):
     posts = Post.objects.all()
+    categories = Category.objects.all()
 
-    return render(request,'main.html', {'posts': posts})
+    return render(request,'main.html', {'posts': posts, 'categories': categories})
 
 def post_add(request):
+    error = ''
     if request.method == 'POST':
-        # print(request.POST)
         title = request.POST.get('title')
         text = request.POST.get('text')
         image = request.FILES.get('image')
-        post = Post(title=title, text=text, image=image)
-        post.save()
+        category = request.POST.get('category')
 
-        return redirect('main')
+        category = Category.objects.get(title=category)
 
-    return render(request, 'post_add.html')
+        if  title != '':
+            post = Post(title=title, text=text, image=image,  category=category)
+            post.save()
+
+            return redirect('main')
+
+        else:
+            error = 'Ошибка. Заполните поле "Заголовок"'
+
+    categories = Category.objects.all()
+
+    return render(request, 'post_add.html', {'categories': categories, 'error': error})
